@@ -1,17 +1,15 @@
 ﻿using Application.Products.Commands;
 using Application.Products.Queries;
-using Domain.Entities;
 using MediatR;
-using Newtonsoft.Json;
 
 namespace WebApi.Controller;
 
-public static class ProductRoute
+public static class ProductController
 {
     public static WebApplication MapRouteProductEndpoint(this WebApplication app)
     {
 
-        app.MapGet("/product/{id}", async (int id,ISender sender) =>
+        app.MapGet("/product/{id}", async (int id, ISender sender) =>
         {
             var products = await sender.Send(new GetProductByIdQuery(id));
 
