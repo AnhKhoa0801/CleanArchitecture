@@ -8,10 +8,14 @@ public static class ProductController
 {
     public static WebApplication MapRouteProductEndpoint(this WebApplication app)
     {
-
         app.MapGet("/product/{id}", async (int id, ISender sender) =>
         {
             var products = await sender.Send(new GetProductByIdQuery(id));
+
+            if(products is null)
+            {
+                return Results.BadRequest($"Product Id {id} is not found");
+            }
 
             return Results.Ok(products);
         });
@@ -34,7 +38,7 @@ public static class ProductController
     }
 }
 
-public record CreateProductRequest(
+public sealed record CreateProductRequest(
     string Name,
     decimal Price,
     List<string> Tags);

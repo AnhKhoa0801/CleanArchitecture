@@ -1,8 +1,5 @@
 using Application;
-using Application.Products.Commands;
-using Application.Products.Queries;
 using Infrastructure;
-using MediatR;
 using Presentation;
 using Serilog;
 using WebApi.Controller;
@@ -18,7 +15,8 @@ builder.Services
     .AddPresentation();
 
 builder.Host.UseSerilog((context, configuration) =>
-    configuration.ReadFrom.Configuration(context.Configuration));
+    configuration.ReadFrom.Configuration(context.Configuration)
+                  .WriteTo.Debug());
 
 var app = builder.Build();
 
