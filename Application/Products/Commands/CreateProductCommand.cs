@@ -1,8 +1,8 @@
-﻿using Domain.Entities;
-using MediatR;
+﻿using Domain.CQRS;
+using Domain.Entities;
 
 namespace Application.Products.Commands;
 
 public sealed record CreateProductCommand(string Name,
     decimal Price, 
-    List<string> Tags):IRequest<Product>;
+    List<string> Tags): ICommand<Product>;

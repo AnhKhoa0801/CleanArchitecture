@@ -1,15 +1,17 @@
-﻿using Domain.Entities;
+﻿using Domain.CQRS;
+using Domain.Entities;
 using Domain.Interface;
-using MediatR;
+using Marten;
 
 namespace Application.Products.Commands;
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Product>
+public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, Product>
 {
-    private readonly IProductRepository _repository;
-    public CreateProductCommandHandler(IProductRepository repository)
+    private readonly IDocumentSession _session;
+    private IDatabaseContext _context;
+    public CreateProductCommandHandler(IDocumentSession session)
     {
-        _repository = repository;
+        _session = session;
     }
     public async Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
@@ -19,7 +21,11 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             Price = request.Price,
             Tags = request.Tags,
         };
-        await _repository.Add(product);
+        // mapper 1:1 database
+        _session.Store(product);
+
+        await _session.SaveChangesAsync();
+
         return product;
     }
 }

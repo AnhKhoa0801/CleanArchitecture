@@ -1,10 +1,10 @@
-﻿using Domain.Entities;
+﻿using Domain.CQRS;
+using Domain.Entities;
 using Domain.Interface;
-using MediatR;
 
 namespace Application.Products.Queries;
 
-public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Product>
+public class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQuery, Product>
 {
     private readonly IProductRepository _repository;
     public GetProductByIdQueryHandler(IProductRepository repository)

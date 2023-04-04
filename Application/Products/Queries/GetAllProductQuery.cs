@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
-using MediatR;
+﻿using Domain.CQRS;
+using Domain.Entities;
 
 namespace Application.Products.Queries;
 
-public sealed record GetAllProductQuery :IRequest<List<Product>>;
+public sealed record GetAllProductQuery :IQuery<List<Product>>;

@@ -1,10 +1,10 @@
-﻿using Domain.Entities;
+﻿using Domain.CQRS;
+using Domain.Entities;
 using Domain.Interface;
-using MediatR;
 
 namespace Application.Products.Queries;
 
-public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQuery, List<Product>>
+public class GetAllProductQueryHandler : IQueryHandler<GetAllProductQuery, List<Product>>
 {
     private readonly IProductRepository _repository;
     public GetAllProductQueryHandler(IProductRepository repository)
